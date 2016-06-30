@@ -1,0 +1,9 @@
+﻿Trong file css minify, sẽ chứa thêm các css của
++ Bootstrap 2.2.2
++ slick.css
++ slick_theme.css
+
+Trong file js minify, sẽ chứa thêm các jss của
++ jQuery v2.2.2 
++ jquery.gifplayer.js
++ slick.min.js
