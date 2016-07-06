@@ -100,6 +100,29 @@
             }
         },
 
+        loadSource: function () {
+			var videoSrcMp4 = this.getFile('mp4');
+			if(!videoSrcMp4)
+			{
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = (function (x) {
+					return function () {
+						if (xhttp.readyState == 4 && xhttp.status == 200) {
+							var jsonResult = JSON.parse(xhttp.responseText);
+							x.videoSource = jsonResult.source;
+							x.loadVideo();
+						}
+					}
+				})(this);
+
+				var postId = this.previewElement.attr("data-PostId");
+				xhttp.open("GET", "https://graph.facebook.com/v2.6/" + postId + "?fields=source&access_token=EAAXD9m36G1ABAIf4PwgX7iyMBkPh4ZAAbs2fRb8O6bQ9SSQgBKgpk1xOTNwMDHoo9ZCNj4vckcZBJHY43XV37cXpgPHmW1QcO80YMoCcoadGh6ZBBBT4YbZCCrSZAgqUq3uZCmIcG9tcMzky548zHFOt2MUXOJH5xO2ZCeFZBQ6ui0QZDZD", true);
+				xhttp.send();
+			}
+			else{
+				this.loadVideo();
+			}           
+        },
         loadAnimation: function () {
             this.processScope();
 
@@ -109,7 +132,7 @@
                 this.loadGif();
             } else if (this.mode == 'video') {
                 if (!this.videoLoaded) {
-                    this.loadVideo();
+                    this.loadSource();
                 } else {
                     this.playVideo();
                 }
@@ -184,13 +207,24 @@
 
         loadVideo: function () {
             this.videoLoaded = true;
-
-            var videoSrcMp4 = this.getFile('mp4');
-            var videoSrcWebm = this.getFile('webm');
-
-            this.videoElement = $('<video controls class="gp-video-element" autoplay="autoplay" loop="loop" poster="' +
+			this.videoElement = "";
+			
+			var videoSrcMp4 = "";			
+			if(!this.videoSource)
+			{
+				var videoSrcMp4 = this.getFile('mp4');
+				this.videoElement = $('<video controls class="gp-video-element" autoplay="autoplay" loop="loop" poster="' +
 				this.previewElement.attr('src') + '"><source type="video/mp4" src="' +
-				videoSrcMp4 + '"><source type="video/webm" src="' + videoSrcWebm + '"></video>');
+				videoSrcMp4 + '"></video>');
+			}
+			else{
+				var videoSrcMp4 = this.videoSource;				
+				this.videoElement = $('<video controls class="gp-video-element" autoplay="autoplay" loop="loop" poster="' +
+				this.previewElement.attr('src') + '"><source type="video/mp4" src="' +
+				videoSrcMp4 + '"></video>');
+			}
+
+
 
             var gp = this;
 
