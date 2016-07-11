@@ -116,7 +116,7 @@
 				})(this);
 
 				var postId = this.previewElement.attr("data-PostId");
-				xhttp.open("GET", "https://graph.facebook.com/v2.6/" + postId + "?fields=source&access_token=EAAXD9m36G1ABAIf4PwgX7iyMBkPh4ZAAbs2fRb8O6bQ9SSQgBKgpk1xOTNwMDHoo9ZCNj4vckcZBJHY43XV37cXpgPHmW1QcO80YMoCcoadGh6ZBBBT4YbZCCrSZAgqUq3uZCmIcG9tcMzky548zHFOt2MUXOJH5xO2ZCeFZBQ6ui0QZDZD", true);
+				xhttp.open("GET", "https://graph.facebook.com/v2.6/" + postId + "?fields=source&access_token=EAAXD9m36G1ABAApFNZBvN0EG6ml6MzZB8EjMvZBC7uZAzTZBVhtoc8djLYWbasDI1NRZCRxWZCXLq2ELPHCoR2TqQFkKYEyvJ1Cl984L8WduwtZCKyiZCC84le5V0HGkIFMoUcuDe5LfHYVZCXUzNVS2UDJnRvnZAMUBsswxN0Te8MaOL3blAJ75tZB8", true);
 				xhttp.send();
 			}
 			else{
