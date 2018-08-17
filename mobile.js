@@ -53,10 +53,6 @@ function requestLoadMore() {
             $("#next-button").attr('href', nextPage);
 
             $("#loader").css('display', 'none');
-
-            $("video:not([parsed='true'])").each(function () {
-                assignVideoHandler(this);
-            });
         });
     }
 }
