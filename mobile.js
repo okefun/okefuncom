@@ -40,22 +40,23 @@ displayNumber = 8;
 postMaxPublished = "";
 
 function requestLoadMore() {
-    $("#loader").css('display', 'inline-block');
+    if (document.referrer != "" && document.referrer.indexOf('tatlon.com') < 0) {
+        $("#loader").css('display', 'inline-block');
 
-    var nextLink = $("#next-button").attr('href');
-    nextLink += "&m=1";
-    $.get(nextLink, function (response) {
-        var responseDOM = $(response);
+        var nextLink = $("#next-button").attr('href');
+        nextLink += "&m=1";
+        $.get(nextLink, function (response) {
+            var responseDOM = $(response);
 
-        $("#post-list").append(responseDOM.find("#post-list").html());
-        nextPage = responseDOM.find("#next-button").attr('href');
-        $("#next-button").attr('href', nextPage);
+            $("#post-list").append(responseDOM.find("#post-list").html());
+            nextPage = responseDOM.find("#next-button").attr('href');
+            $("#next-button").attr('href', nextPage);
 
-        $("#loader").css('display', 'none');
+            $("#loader").css('display', 'none');
 
-
-        $("video:not([parsed='true'])").each(function () {
-            assignVideoHandler(this);
+            $("video:not([parsed='true'])").each(function () {
+                assignVideoHandler(this);
+            });
         });
-    });
+    }
 }
