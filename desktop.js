@@ -409,71 +409,16 @@ function displayAjaxDetail(json) {
 
 isDetailAjaxPage = false; // Xác định đang mở xem chi tiết = ajax
 $(document).ready(function () {
-    // construct an instance of Headroom, passing the element
-    var headroom = new Headroom(document.getElementById("sticker"), {
-        "offset": 45,
-        "tolerance": 5,
-        "classes": {
-            "initial": "animated",
-            "pinned": "slideDown",
-            "unpinned": "slideUp"
-        }
-    });
-    // initialise
-    headroom.init();
+    $("#fanpage-like-box").sticky({ topSpacing: 40 });
+    $("#sticker").sticky({ topSpacing: 0, zIndex: 99999 });
 
-    $("video:not([parsed='true'])").each(function () {
-        assignVideoHandler(this);
-    });
 
-    getArticleStatistics();
-    listLoadMore();
-});
-
-// Chia sẽ bài viết qua facebook
-$(document).on('click', 'a[class*="share-facebook"]', function (e) {
-    e.preventDefault();
-    var button = this;
-    window.FB.ui({
-        method: "share",
-        href: $(this).attr('href')
-    }, function (e) {
-        alert("Cảm ơn bạn đã chia sẽ <3");
-        $(button).addClass('has-share')
+    $(document).ready(function () {
+        if (location.href.indexOf('.html') > 0) requestLoadMore();
     });
 
 });
 
-
-$(document).on('click', '#post-list a', function (e) {
-    if (getParameterByName("m") == "1") {
-        e.preventDefault();
-
-        isDetailAjaxPage = true;
-
-        $("#ajax-loading-container").show();
-        $('#detail-modal').show();
-        $.get('/feeds/posts/default/' + $(this).attr('data-id') + '?alt=json-in-script&callback=displayAjaxDetail');
-
-        $("#pure-body").hide();
-
-        history.pushState(null, null, $(this).attr('href') + "?m=1");
-    }
-});
-
-window.onpopstate = function (event) {
-    video[0].pause();
-
-    $("#pure-body").show();
-    $('#detail-modal').hide();
-
-    $("#ajax-detail-container").hide();
-    $("#ajax-loading-container").hide();
-
-    isDetailAjaxPage = false;
-
-    $("#mobile-ajax-detail").html("");
-};
 
 function guid() {
     function s4() {
@@ -551,72 +496,35 @@ function getMetaContent(e) {
     for (var t = document.getElementsByTagName("meta"), n = 0; n < t.length; n++)if (t[n].getAttribute("property") === e) return t[n].getAttribute("content"); return "";
 }
 
-$(document).on("click touch", ".fb-share, .zalo-share", function () {
 
-    var e = getMetaContent("og:title"),
-        n = getMetaContent("og:description"),
-        i = getMetaContent("og:url");
-
-
-    var r = $(this).attr("data-type"), o = $(this).attr("data-href");
-    var title = getMetaContent("og:title");
-
-    switch (window.ga && window.ga("send", {
-        hitType: "event",
-        eventCategory: "mobile_" + r,
-        eventAction: "share",
-        eventLabel: getMetaContent("og:title")
-    }), r) {
-        case "facebook":
-            if ("undefined" !== window.FB) {
-                var a = window.FB;
-
-                a.ui({
-                    method: "share",
-                    href: o
-                }, function (e) { })
-            }
-            break;
-        default:
-    }
-})
-
-
-//Load more trang danh sách
-function listLoadMore() {
-    allowLoadMore = true;
-
-    $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 2000 && allowLoadMore) {
-            requestLoadMore();
-        }
-    });
-
-}
 
 function requestLoadMore() {
-    $("#loader").css('display', 'inline-block');
+    if (document.referrer == "" || (document.referrer != "" && document.referrer.indexOf('tatlon.com') < 0)) {
 
-    allowLoadMore = false;
-    var nextLink = $("#next-button").attr('href');
-    $.get(nextLink, function (response) {
-        var responseDOM = $(response);
+        $("#loader").css('display', 'inline-block');
 
-        $("#post-list").append(responseDOM.find("#post-list").html());
-        nextPage = responseDOM.find("#next-button").attr('href');
-        $("#next-button").attr('href', nextPage);
+        allowLoadMore = false;
+        var nextLink = $("#next-button").attr('href');
+        $.get(nextLink, function (response) {
+            var responseDOM = $(response);
 
-        $("#loader").css('display', 'none');
+            $("#post-list").append(responseDOM.find("#post-list").html());
+            nextPage = responseDOM.find("#next-button").attr('href');
+            $("#next-button").attr('href', nextPage);
 
-        allowLoadMore = true;
+            $("#loader").css('display', 'none');
 
-        $("video:not([parsed='true'])").each(function () {
-            assignVideoHandler(this);
+            allowLoadMore = true;
+
+            $("video:not([parsed='true'])").each(function () {
+                assignVideoHandler(this);
+            });
+
+            eval(responseDOM.find("#ids").html());
+            getArticleStatistics();
         });
+    }
 
-        eval(responseDOM.find("#ids").html());
-        getArticleStatistics();
-    });
 }
 
 function insertCommentBox(e, t) {
