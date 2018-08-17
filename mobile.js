@@ -55,4 +55,7 @@ function requestLoadMore() {
             $("#loader").css('display', 'none');
         });
     }
+    else {
+        $("#next-button").attr('href', "javascript:history.go(-1)");
+    }
 }
