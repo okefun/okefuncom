@@ -1,0 +1,61 @@
+﻿function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function extractThumbnail(content) {
+    var thumbnail = "";
+
+    var findUrl = false;
+    for (var i = 0; i < 500; i++) {
+        if (!findUrl) {
+            if (content[i] == "'") {
+                findUrl = true;
+            }
+
+        } else {
+
+            if (content[i] == "'" && findUrl) {
+                break;
+            }
+
+            thumbnail += content[i];
+        }
+    }
+
+    return thumbnail;
+}
+
+//Load more trang danh sách
+displayNumber = 8;
+postMaxPublished = "";
+
+function requestLoadMore() {
+    $("#loader").css('display', 'inline-block');
+
+    var nextLink = $("#next-button").attr('href');
+    nextLink += "&m=1";
+    $.get(nextLink, function (response) {
+        var responseDOM = $(response);
+
+        $("#post-list").append(responseDOM.find("#post-list").html());
+        nextPage = responseDOM.find("#next-button").attr('href');
+        $("#next-button").attr('href', nextPage);
+
+        $("#loader").css('display', 'none');
+
+
+        $("video:not([parsed='true'])").each(function () {
+            assignVideoHandler(this);
+        });
+    });
+}
