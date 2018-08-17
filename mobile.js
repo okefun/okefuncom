@@ -57,6 +57,6 @@ function requestLoadMore() {
     }
     else {
         $("#next-button").attr('href', "javascript:history.go(-1)");
-        $("#next-button").innerHtml = '<span class="arrow-left"></span><span class="label">Quay lại</span> ';
+        $("#next-button").html('<span class="arrow-left"></span><span class="label">Quay lại</span>');
     }
 }
