@@ -56,7 +56,11 @@ function requestLoadMore() {
         });
     }
     else {
+        $("#next-button").removeClass('btn-next');
+        $("#next-button").addClass('btn-previous');
         $("#next-button").attr('href', "javascript:history.go(-1)");
         $("#next-button").html('<span class="arrow-left"></span><span class="label">Quay lại</span>');
+        $("#next-button").parent().addClass('col-xs-6');
+        $("#next-button").css('margin-left', '10px');
     }
 }
