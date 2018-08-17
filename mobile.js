@@ -40,7 +40,7 @@ displayNumber = 8;
 postMaxPublished = "";
 
 function requestLoadMore() {
-    if (document.referrer != "" && document.referrer.indexOf('tatlon.com') < 0) {
+    if (document.referrer == "" || (document.referrer != "" && document.referrer.indexOf('tatlon.com') < 0)) {
         $("#loader").css('display', 'inline-block');
 
         var nextLink = $("#next-button").attr('href');
