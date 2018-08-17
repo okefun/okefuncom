@@ -7425,7 +7425,7 @@ header {
         float: left;
         background-color: #fff;
         padding-right: 10px;
-        color: #2FA1B3;
+        color: #2196F3;
     }
 
 
@@ -7469,7 +7469,7 @@ header {
     width: 100%;
     border: 0px;
     color: #FFF !important;
-    background-color: #2FA1B3 !important;
+    background-color: #2196F3 !important;
 }
 
     .next-page:active {
@@ -7754,11 +7754,11 @@ header {
     margin-top: 10px;
     font-size: 20px;
     padding-left: 15px;
-    border-left: 4px solid #2FA1B3;
+    border-left: 4px solid #2196F3;
 }
 
 .menu {
-    background: linear-gradient(141deg, #2cb5e8 0%, #0fb8ad 51%, #0fb8ad 75%);
+    background: #2196F3;
     height: 40px;
 }
 
@@ -7789,7 +7789,7 @@ header {
             }
 
                 .menu ul li a:hover, .menu ul li a.active {
-                    background-color: #0e6e79;
+                    background-color: #2b76b2;
                     text-decoration: none;
                 }
 
@@ -7908,7 +7908,7 @@ header {
     padding-left: 10px;
     font-size: 0;
     text-align: right;
-    border-left: 5px solid #2FA1B3;
+    border-left: 5px solid #2196F3;
 }
 
 
@@ -7920,7 +7920,7 @@ header {
         font-style: normal;
         font-family: inherit;
         display: inline-block;
-        color: #2FA1B3;
+        color: #2196F3;
         text-transform: uppercase;
         float: left;
         margin-top: 2px;
@@ -8219,7 +8219,7 @@ header {
     border: 2px solid #f3f3f3;
     -webkit-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
-    border-top: 2px solid #2FA1B3;
+    border-top: 2px solid #2196F3;
     border-radius: 50%;
     width: 25px;
     height: 25px;
